@@ -206,49 +206,6 @@ padding: 0;
                 </a>
               </div>
             </div>
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link  is-active" href="#" style="color: #FFFF ;">
-                Chức Năng
-              </a>
-              <div class="navbar-dropdown ">
-                <a class="navbar-item " href="#">
-                  Overview
-                </a>
-                <a class="navbar-item " href="#">
-                  Modifiers
-                </a>
-                <a class="navbar-item " href="#">
-                  Columns
-                </a>
-                <a class="navbar-item " href="#">
-                  Layout
-                </a>
-                <a class="navbar-item " href="#">
-                  Form
-                </a>
-                <a class="navbar-item " href="#">
-                  Elements
-                </a>
-      
-                <a class="navbar-item is-active" href="#">
-                  Components
-                </a>
-      
-                <hr class="navbar-divider">
-                <div class="navbar-item">
-                  <div>
-                    <p class="is-size-6-desktop">
-                      <strong class="has-text-info">0.5.1</strong>
-                    </p>
-      
-                    <small>
-                      <a class="bd-view-all-versions" href="#">View all versions</a>
-                    </small>
-      
-                  </div>
-                </div>
-              </div>
-            </div>
             <a class="navbar-item " href="http://localhost:8080/WebShop/Trangchu/GioHang" style="color: #FFFF ;">
               <span <%= client==null||itemsCartList.size()==0 ? "class=\"close\"":""%> style="height: 18px;background-color: darkorange; width: 18px; border-radius: 50%;position: absolute; left: 0;top: 10px; font-size: small;
               font-size: small;text-align: center;">
@@ -260,15 +217,7 @@ padding: 0;
           </div>
           
           <div class="navbar-end">
-            <a class="navbar-item is-hidden-desktop-only" href="#" target="_blank" style="background-color: #ee4d2d!important;">
-                <span style= "height: 12px; background-color: darkorange; width: 12px;border-radius: 50%;
-                position: absolute; left: 12px; top: 10px; font-size: small;
-                font-size: small;text-align: center; "></span>
-                
-                <span class="icon" style="color: #FFFF; border-radius: 50%; border: 2px solid; padding: 12px; ">
-                <i class="fa fa-bell" aria-hidden="true"></i>
-              </span>
-            </a>
+
             <div class="navbar-item">
               <div class="field is-grouped">
                 <p class="control">
