@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import entity.Shop;
 
 /**
  * Servlet Filter implementation class FilterAdmin
@@ -45,7 +44,7 @@ public class FilterAdmin implements Filter {
 		HttpServletResponse httpResponse=(HttpServletResponse) response;
 		HttpSession ses=httpRequest.getSession();
 		String accesser=(String)ses.getAttribute("accesser");
-		Shop shop=(Shop) ses.getAttribute("shop");
+//		Shop shop=(Shop) ses.getAttribute("shop");
 		if(accesser!=null && accesser.equals("admin")) chain.doFilter(request, response);
 		else httpResponse.sendRedirect(httpRequest.getContextPath()+"/CannotAccess");
 

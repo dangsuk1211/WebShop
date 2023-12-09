@@ -1,12 +1,12 @@
 
-<%@page import="service.ClientService"%>
-<%@page import="service.CategoryService"%>
-<%@page import="entity.Category"%>
-<%@page import="service.CartServive"%>
-<%@page import="entity.Cart"%>
+<%@page import="model.DAOs.ClientDAO"%>
+<%@page import="model.DAOs.CategoryDAO"%>
+<%@page import="model.entity.Category"%>
+<%@page import="model.DAOs.CartDAO"%>
+<%@page import="model.entity.Cart"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="entity.Product"%>
-<%@page import="entity.Client"%>
+<%@page import="model.entity.Product"%>
+<%@page import="model.entity.Client"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="/WebShop/style/assets/css/bullma_css.css">
@@ -97,18 +97,18 @@ padding: 0;
       </style>
         <!-- navigation-header -->
         <%
-        	HttpSession ses=request.getSession();
-        	String accesser=(String)ses.getAttribute("accesser");
-        	Client client=null;
-        	ArrayList<Cart> itemsCartList=new ArrayList<Cart>();
-        	ArrayList<Category> categoryList=new ArrayList<Category>();
-        	categoryList=CategoryService.getCategorysInData("category");
-        	if(accesser!=null && accesser.equals("user")){
-        		client=(Client) ses.getAttribute("user");
-        		client=client!=null ? ClientService.getClientById(client.getId(), "client"):null;
-              	itemsCartList= client!=null ? (ArrayList<Cart>) CartServive.getItemsCartByClient(client.getId(), "cart"):null;
-              	ses.setAttribute("itemsCartList", itemsCartList);
-        	}
+        HttpSession ses=request.getSession();
+                                	String accesser=(String)ses.getAttribute("accesser");
+                                	Client client=null;
+                                	ArrayList<Cart> itemsCartList=new ArrayList<Cart>();
+                                	ArrayList<Category> categoryList=new ArrayList<Category>();
+                                	categoryList=CategoryDAO.getCategorysInData("category");
+                                	if(accesser!=null && accesser.equals("user")){
+                                		client=(Client) ses.getAttribute("user");
+                                		client=client!=null ? ClientDAO.getClientById(client.getId(), "client"):null;
+                                      	itemsCartList= client!=null ? (ArrayList<Cart>) CartDAO.getItemsCartByClient(client.getId(), "cart"):null;
+                                      	ses.setAttribute("itemsCartList", itemsCartList);
+                                	}
         %>
 <nav class="navbar " style="background-color: #ee4d2d; ">
         <div class="navbar-brand"  >

@@ -9,12 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import entity.Client;
-import entity.Payment;
-import service.PaymentService;
+
+import model.DAOs.PaymentDAO;
+import model.entity.Client;
+import model.entity.Payment;
 @WebServlet("/Trangchu/Payment")
 public class PagePayment extends HttpServlet{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
@@ -33,7 +38,7 @@ public class PagePayment extends HttpServlet{
 	    String cardholderName=(String) req.getParameter("name");
 	    HttpSession ses=req.getSession();
 	    Client client=(Client) ses.getAttribute("user");
-	    PaymentService.addPaymentToData(new Payment(0, cardholderName, client.getFullName(),0,client.getId() ,money), "payment");
+	    PaymentDAO.addPaymentToData(new Payment(0, cardholderName, client.getFullName(),0,client.getId() ,money), "payment");
 	    resp.sendRedirect(req.getContextPath()+"/Trangchu");
 	}
 }

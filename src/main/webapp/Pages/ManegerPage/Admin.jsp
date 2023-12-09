@@ -1,9 +1,9 @@
-<%@page import="service.ClientService"%>
-<%@page import="service.PaymentService"%>
-<%@page import="service.OwnerShopService"%>
-<%@page import="entity.Shop"%>
-<%@page import="entity.Client"%>
-<%@page import="entity.Payment"%>
+<%@page import="model.DAOs.ClientDAO"%>
+<%@page import="model.DAOs.PaymentDAO"%>
+<%@page import="model.DAOs.OwnerShopDAO"%>
+<%@page import="model.entity.Shop"%>
+<%@page import="model.entity.Client"%>
+<%@page import="model.entity.Payment"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -68,12 +68,11 @@
                     </thead>
                     <tbody>
                   <%
-
-                                      ArrayList<Payment> paymentList=PaymentService.getPayments("payment");
-                                    	ArrayList<Shop> shopList=OwnerShopService.getShops("shop");
-                                    	ArrayList<Client> clientList=ClientService.getClients("client");
-                                      if(paymentList!=null)
-                                          for(Payment pay: paymentList){
+                  ArrayList<Payment> paymentList=PaymentDAO.getPayments("payment");
+                                                                                          	ArrayList<Shop> shopList=OwnerShopDAO.getShops("shop");
+                                                                                          	ArrayList<Client> clientList=ClientDAO.getClients("client");
+                                                                                            if(paymentList!=null)
+                                                                                                for(Payment pay: paymentList){
                   %>
                       <tr>
                       	<td><%=pay.getPaymentID() %></td>

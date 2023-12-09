@@ -1,4 +1,4 @@
-package service;
+package model.DAOs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,10 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import config.ConnectionSQL;
-import entity.Client;
+import model.entity.Client;
 
 
-public class ClientService {
+public class ClientDAO {
     public static void addClientToData(Client client, String data) {
     	try {
     		Connection connection=ConnectionSQL.getConnection();

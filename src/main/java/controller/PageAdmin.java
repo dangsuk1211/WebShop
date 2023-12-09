@@ -11,20 +11,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-
-
-import config.ConnectionSQL;
-import entity.Payment;
-import entity.Product;
-import service.PaymentService;
-import service.ProductService;
+import model.DAOs.PaymentDAO;
+import model.entity.Product;
 
 @WebServlet(urlPatterns = "/Admin")
 public class PageAdmin extends HttpServlet{
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	ArrayList<Product> productList=new ArrayList<Product>();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,18 +37,18 @@ public class PageAdmin extends HttpServlet{
 	    req.setCharacterEncoding("UTF-8");
 	    resp.setCharacterEncoding("UTF-8");
 	    resp.setContentType("text/html; charset=UTF-8");
-	    HttpSession ses=req.getSession();
+//	    HttpSession ses=req.getSession();
 	    String table=req.getParameter("table");
-	    System.out.println(table);
+//	    System.out.println(table);
 	    switch (table) {
 		case "payment":
 			String status=req.getParameter("status");
 			int paymentID=Integer.parseInt(req.getParameter("paymentID"));
-			if(!status.equals("3")) PaymentService.updateStatusPayment(paymentID, status, "payment");
-			else PaymentService.deletePayment(paymentID, "payment");
+			if(!status.equals("3")) PaymentDAO.updateStatusPayment(paymentID, status, "payment");
+			else PaymentDAO.deletePayment(paymentID, "payment");
 			break;
 		case "submit":
-			PaymentService.updatePaymentsMoney("payment","client");
+			PaymentDAO.updatePaymentsMoney("payment","client");
 			break;
 //		case "DELETE":
 //			productID=Integer.parseInt(req.getParameter("pID"));
@@ -72,8 +70,7 @@ public class PageAdmin extends HttpServlet{
 			break;
 		}
 		
-		RequestDispatcher dispatcher=req.getRequestDispatcher("/Pages/ManegerPage/Admin.jsp");
-		dispatcher.forward(req, resp);
+	    resp.sendRedirect(req.getContextPath()+"/Admin");
 	}
 
 }

@@ -1,4 +1,4 @@
-package service;
+package model.DAOs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,10 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import config.ConnectionSQL;
-import entity.Payment;
-import entity.Product;
+import model.entity.Payment;
+import model.entity.Product;
 
-public class PaymentService {
+public class PaymentDAO {
 	public static ArrayList<Payment> getPayments( String data) {
 		ArrayList<Payment> paymentList=new ArrayList<Payment>();
 		Connection connection=ConnectionSQL.getConnection();

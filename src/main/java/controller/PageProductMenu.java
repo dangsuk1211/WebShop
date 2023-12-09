@@ -10,12 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entity.Product;
-import service.ProductService;
+import model.DAOs.ProductDAO;
+import model.entity.Product;
 
 @WebServlet(urlPatterns = "/Trangchu/ProductMenu")
 public class PageProductMenu extends HttpServlet{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	ArrayList<Product> productList=new ArrayList<Product>();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,9 +31,9 @@ public class PageProductMenu extends HttpServlet{
 	    String categoryID=req.getParameter("categoryID");
 	    if(search==null) {
 	    	if(categoryID==null) {
-	    		productList=ProductService.getProductFromData("product");
+	    		productList=ProductDAO.getProductFromData("product");
 	    	}else {
-	    		productList=ProductService.getProductsByCategory(Integer.parseInt(categoryID),"product");
+	    		productList=ProductDAO.getProductsByCategory(Integer.parseInt(categoryID),"product");
 	    	}
 	    }else {
 	    	System.out.println(search);

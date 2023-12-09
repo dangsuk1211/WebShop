@@ -1,6 +1,6 @@
-<%@page import="service.CartServive"%>
+<%@page import="model.DAOs.CartDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="entity.Client"%>
+<%@page import="model.entity.Client"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>

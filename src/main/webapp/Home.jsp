@@ -1,13 +1,13 @@
-<%@page import="service.ProductService"%>
-<%@page import="entity.Shop"%>
-<%@page import="entity.Product"%>
+<%@page import="model.DAOs.ProductDAO"%>
+<%@page import="model.entity.Shop"%>
+<%@page import="model.entity.Product"%>
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	ArrayList<Product> productList=new ArrayList<Product>();
+ArrayList<Product> productList=new ArrayList<Product>();
 	ArrayList<Shop> shopList=new ArrayList<Shop>();
 	shopList=(ArrayList<Shop>) request.getAttribute("shopList");
 %>
@@ -159,10 +159,10 @@
           </div>
         </div>
         <%
-			if(shopList!=null)
-			for(Shop shop: shopList){
-				productList=ProductService.getProductsByShop(shop.getId(),"product");
-		%>
+        if(shopList!=null)
+        	for(Shop shop: shopList){
+        		productList=ProductDAO.getProductsByShop(shop.getId(),"product");
+        %>
 		  <script type="text/javascript">
            $(document).on('ready', function () {
                $("<%= ".Shop"+shop.getId() %>").slick({

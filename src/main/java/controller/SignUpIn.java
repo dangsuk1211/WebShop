@@ -1,8 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -13,15 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import config.ConnectionSQL;
-import entity.Client;
-import entity.Shop;
-import service.ClientService;
-import service.OwnerShopService;
-import service.ProductService;
-import entity.Product;
+import model.DAOs.ClientDAO;
+import model.DAOs.OwnerShopDAO;
+import model.entity.Client;
+import model.entity.Product;
+import model.entity.Shop;
 @WebServlet(urlPatterns = "/Trangchu/SignUpIn")
 public class SignUpIn extends HttpServlet{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	ArrayList<Product> productList=new ArrayList<Product>();
 	private String userAdmin="Admin";
 	private String passAdmin="0123456789";
@@ -53,7 +53,7 @@ public class SignUpIn extends HttpServlet{
 			String phone=(String)req.getParameter("phone");
 			String birthday=(String)req.getParameter("birthday");
 			Client client=new Client(0,user,pass,"0",name,birthday,address,phone,null);
-			ClientService.addClientToData(client, "client");
+			ClientDAO.addClientToData(client, "client");
 			ses.setAttribute("accesser","user");
 			ses.setAttribute("user", client);
 			resp.sendRedirect(req.getContextPath()+"/Trangchu");
@@ -64,7 +64,7 @@ public class SignUpIn extends HttpServlet{
 			String nameShop=(String)req.getParameter("nameShop");
 			String urlAvatar=(String)req.getParameter("urlAvatar");
 			Shop shop=new Shop(0, user, pass, nameShop,urlAvatar);
-			OwnerShopService.addShopToData(shop, "shop");
+			OwnerShopDAO.addShopToData(shop, "shop");
 			ses.setAttribute("accesser","shop");
 			ses.setAttribute("shop", shop);
 			resp.sendRedirect(req.getContextPath()+"/Trangchu/OwnerShop");
@@ -72,14 +72,14 @@ public class SignUpIn extends HttpServlet{
 		case "login":
 			user=(String)req.getParameter("user");
 			pass=(String)req.getParameter("password");
-			Client object1=ClientService.getAccesser(user, pass,"client");
+			Client object1=ClientDAO.getAccesser(user, pass,"client");
 			if(object1!=null)
 			{
 				ses.setAttribute("accesser", "user");
 				ses.setAttribute("user", object1);
 				break;
 			}
-			Shop object2=OwnerShopService.getAccesser(user, pass, "shop");
+			Shop object2=OwnerShopDAO.getAccesser(user, pass, "shop");
 			if(object2!=null)
 			{
 				ses.setAttribute("accesser", "shop");

@@ -1,8 +1,8 @@
-<%@page import="entity.Category"%>
-<%@page import="service.CategoryService"%>
-<%@page import="service.ProductService"%>
-<%@page import="entity.Shop"%>
-<%@page import="entity.Product"%>
+<%@page import="model.entity.Category"%>
+<%@page import="model.DAOs.CategoryDAO"%>
+<%@page import="model.DAOs.ProductDAO"%>
+<%@page import="model.entity.Shop"%>
+<%@page import="model.entity.Product"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -268,22 +268,22 @@
                     </thead>
                     <tbody>
                   <%
-              		Shop shop=(Shop)request.getSession().getAttribute("shop");
-                    ArrayList<Product> productList=new ArrayList<Product>();
-                    productList=(ArrayList<Product>) request.getAttribute("productList");
-                	ArrayList<Category> categoryList=new ArrayList<Category>();
-                	categoryList= CategoryService.getCategorysInData("category");
-                    if(productList!=null)
-                        for(Product product: productList){
-                   %>
+                  Shop shop=(Shop)request.getSession().getAttribute("shop");
+                                      ArrayList<Product> productList=new ArrayList<Product>();
+                                      productList=(ArrayList<Product>) request.getAttribute("productList");
+                                  	ArrayList<Category> categoryList=new ArrayList<Category>();
+                                  	categoryList= CategoryDAO.getCategorysInData("category");
+                                      if(productList!=null)
+                                          for(Product product: productList){
+                  %>
                       <tr>
-                      	<td ><%=product.getId() %></td>
-                        <td><%=product.getFewChar() %> </td>
-                        <td><%=Product.formMoney(product.getOriginalPrice()) %></td>
-                        <td><%=Product.formMoney(product.getSalePrice()) %></td>
-                        <td style="max-width: 200px"><%=product.getUrl() %></td>
-                        <td><img src="<%=product.getUrl() %>"></td>
-                        <td id="<%=product.getCategoryID()%>"><%=CategoryService.getCategory(product.getCategoryID(), "category") %></td>
+                      	<td ><%=product.getId()%></td>
+                        <td><%=product.getFewChar()%> </td>
+                        <td><%=Product.formMoney(product.getOriginalPrice())%></td>
+                        <td><%=Product.formMoney(product.getSalePrice())%></td>
+                        <td style="max-width: 200px"><%=product.getUrl()%></td>
+                        <td><img src="<%=product.getUrl()%>"></td>
+                        <td id="<%=product.getCategoryID()%>"><%=CategoryDAO.getCategory(product.getCategoryID(), "category")%></td>
 			            <td style=" min-width: 80px" >
 			            	<button class="btn-update" style="background-color: #007bff;border-radius: 8%;color: antiquewhite;"><i class="fa fa-wrench" aria-hidden="true"></i>
 			            	</button>

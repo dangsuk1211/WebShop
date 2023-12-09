@@ -1,4 +1,4 @@
-package service;
+package model.DAOs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,9 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import config.ConnectionSQL;
-import entity.Product;
+import model.entity.Product;
 
-public class ProductService {
+public class ProductDAO {
     public static ArrayList<Product> getProductFromData(String data){
     	try {
     		ArrayList<Product> productList=new ArrayList<Product>();

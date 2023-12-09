@@ -1,4 +1,4 @@
-package service;
+package model.DAOs;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,9 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import config.ConnectionSQL;
-import entity.Category;
+import model.entity.Category;
 
-public class CategoryService {
+public class CategoryDAO {
     public static String getCategory(int categoryID, String data) {
     	try {
     		String name=null;

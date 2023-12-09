@@ -1,4 +1,4 @@
-package service;
+package model.DAOs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,11 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import config.ConnectionSQL;
-import entity.Cart;
-import entity.Product;
+import model.entity.Cart;
 
-
-public class CartServive {
+public class CartDAO {
     public static void addCartToData(Cart cart, String data) {
     	try {
     		Connection connection=ConnectionSQL.getConnection();

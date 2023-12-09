@@ -1,15 +1,11 @@
 package config;
 
 import java.sql.*;
-import java.util.ArrayList;
-import entity.Client;
-import entity.Shop;
-import entity.Product;
 
 public class ConnectionSQL {
     private static String url = "jdbc:mysql://localhost:3306/webshop";
     private static String user = "root";
-    private static String password = "hung28092003";
+    private static String password = "";
     public static Connection getConnection() {
     	Connection connection = null;
         try {
@@ -19,7 +15,7 @@ public class ConnectionSQL {
             ex.printStackTrace();
         }
         if(connection==null) System.out.println("Connect failed!");
-        else System.out.println("Connect successed!");
+
         return connection;
     }
 

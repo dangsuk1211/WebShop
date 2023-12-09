@@ -1,4 +1,4 @@
-package service;
+package model.DAOs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,9 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import config.ConnectionSQL;
-import entity.Comment;
+import model.entity.Comment;
 
-public class CommentService {
+public class CommentDAO {
 	public static ArrayList<Comment> getCommentsByProductID(int productID, String data) {
 		ArrayList<Comment>  commentList=new ArrayList<Comment>();
 		Connection connection=ConnectionSQL.getConnection();

@@ -10,18 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import config.ConnectionSQL;
-import entity.Client;
-import entity.Comment;
-import entity.Product;
-import service.CartServive;
-import service.CommentService;
-import service.ProductService;
+import model.DAOs.CommentDAO;
+import model.entity.Client;
+import model.entity.Comment;
+import model.entity.Product;
 
 
 @WebServlet(urlPatterns = "/Trangchu/Product")
 public class DetailProduct extends HttpServlet{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	ArrayList<Product> productList=new ArrayList<Product>();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,14 +50,8 @@ public class DetailProduct extends HttpServlet{
 	    Client client=(Client)ses.getAttribute("user");
 	    String comment=req.getParameter("comment");
 	    int id= Integer.parseInt(req.getParameter("id"));
-		String product=(String)req.getParameter("product");
-		String priceO=(String)req.getParameter("priceO");
-		String priceS=(String)req.getParameter("priceS");
-		String url=(String)req.getParameter("url");
-		int shopID=Integer.parseInt(req.getParameter("shopID"));
-//		int rating= Integer.parseInt(req.getParameter("rate"));
-	    req.setAttribute("product", new Product(id, product, priceO, priceS, url,shopID));
-	    CommentService.addCommentToData(new Comment(comment,client.getId(),id) , "comment");
-		req.getRequestDispatcher("/Detail.jsp").forward(req, resp);
+
+	    CommentDAO.addCommentToData(new Comment(comment,client.getId(),id) , "comment");
+		resp.sendRedirect(req.getContextPath()+"/Trangchu/Product");
 	}
 }

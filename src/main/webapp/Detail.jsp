@@ -1,6 +1,6 @@
-<%@page import="entity.Comment"%>
-<%@page import="service.CommentService"%>
-<%@page import="entity.Product"%>
+<%@page import="model.entity.Comment"%>
+<%@page import="model.DAOs.CommentDAO"%>
+<%@page import="model.entity.Product"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -30,8 +30,8 @@
 <%@ include file="Pages/MasterPage/Header.jsp" %>
 
 <%
-	Product p=(Product) request.getAttribute("product");
-	ArrayList<Comment> commentList=CommentService.getCommentsByProductID(p.getId(),"comment");
+Product p=(Product) request.getAttribute("product");
+	ArrayList<Comment> commentList=CommentDAO.getCommentsByProductID(p.getId(),"comment");
 %>
 
     <div class="container">
@@ -42,13 +42,13 @@
             <div class="col-md-6">
               <div id="slider" class="owl-carousel product-slider">
                 <div class="item">
-                    <img src="<%=p.getUrl() %>" />
+                    <img src="<%=p.getUrl()%>" />
                 </div>
                 <div class="item">
-                    <img src="<%=p.getUrl() %>" />
+                    <img src="<%=p.getUrl()%>" />
                 </div>
                 <div class="item">
-                    <img src="<%=p.getUrl() %>" />
+                    <img src="<%=p.getUrl()%>" />
                 </div>
                 <div class="item">
                     <img src="https://i.ytimg.com/vi/PJ_zomNMK_s/maxresdefault.jpg" />
@@ -57,7 +57,7 @@
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI6nUmObt62eDkqNSmIvCN_KkQExtbpJmUbVx_eTh_Y3v3r-Jw" />
                 </div>
                 <div class="item">
-                    <img src="<%=p.getUrl() %>" />
+                    <img src="<%=p.getUrl()%>" />
                 </div>
                 <div class="item">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI6nUmObt62eDkqNSmIvCN_KkQExtbpJmUbVx_eTh_Y3v3r-Jw" />
@@ -65,13 +65,13 @@
           </div>
           <div id="thumb" class="owl-carousel product-thumb">
             <div class="item">
-                <img src="<%=p.getUrl() %>" />
+                <img src="<%=p.getUrl()%>" />
             </div>
             <div class="item">
-                <img src="<%=p.getUrl() %>" />
+                <img src="<%=p.getUrl()%>" />
             </div>
             <div class="item">
-                <img src="<%=p.getUrl() %>" />
+                <img src="<%=p.getUrl()%>" />
             </div>
             <div class="item">
                 <img src="https://i.ytimg.com/vi/PJ_zomNMK_s/maxresdefault.jpg" />
@@ -80,7 +80,7 @@
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI6nUmObt62eDkqNSmIvCN_KkQExtbpJmUbVx_eTh_Y3v3r-Jw" />
             </div>
             <div class="item">
-                <img src="<%=p.getUrl() %>" />
+                <img src="<%=p.getUrl()%>" />
             </div>
             <div class="item">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI6nUmObt62eDkqNSmIvCN_KkQExtbpJmUbVx_eTh_Y3v3r-Jw" />
@@ -90,7 +90,7 @@
             <div class="col-md-6">
               <div class="product-dtl">
                 <div class="product-info">
-                  <div class="product-name"><%=p.getProduct() %></div>
+                  <div class="product-name"><%=p.getProduct()%></div>
                   <div class="reviews-counter">
                 <div class="rate">
                     <input type="radio" id="star5" name="rate" value="5" checked />
@@ -104,9 +104,11 @@
                     <input type="radio" id="star1" name="rate" value="1" />
                     <label for="star1" title="text">1 star</label>
                   </div>
-                <span><%=p.getNumsold() %> Đã bán</span>
+                <span><%=p.getNumsold()%> Đã bán</span>
               </div>
-                  <div class="product-price-discount"><span><%=Product.formMoney(p.getSalePrice()) %>₫</span><span class="line-through"><%if(p.getOriginalPrice().equals(p.getSalePrice())==false) out.print( Product.formMoney(p.getOriginalPrice())+"₫"); %></span></div>
+                  <div class="product-price-discount"><span><%=Product.formMoney(p.getSalePrice())%>₫</span><span class="line-through"><%
+                  if(p.getOriginalPrice().equals(p.getSalePrice())==false) out.print( Product.formMoney(p.getOriginalPrice())+"₫");
+                  %></span></div>
                 </div>
                 <p>Chất liệu vải rất dễ vệ sinh rất mềm và không có mùi
                     - Kiểu dáng thời trang mới nhất
@@ -177,7 +179,7 @@
               <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Mô Tả</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Đánh Giá (<%=commentList.size() %>)</a>
+              <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Đánh Giá (<%=commentList.size()%>)</a>
             </li>
         </ul>
         
@@ -190,11 +192,11 @@
               <div>
               
               <%
-             Client clientComment;
-              	if(commentList!=null && commentList.size()!=0 ){
-              		for(Comment comment: commentList){
-              		clientComment=ClientService.getClientById(comment.getClientID(), "client");
-              	%>
+                            Client clientComment;
+                                          	if(commentList!=null && commentList.size()!=0 ){
+                                          		for(Comment comment: commentList){
+                                          		clientComment=ClientDAO.getClientById(comment.getClientID(), "client");
+                            %>
               		<div>
               			<img alt="" src="http://windows79.com/wp-content/uploads/2021/02/Thay-the-hinh-dai-dien-tai-khoan-nguoi-dung-mac.png" width="60px">
               			<h1 style="font-size: 20px; display: contents"><%=clientComment.getFullName() %></h1>

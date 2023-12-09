@@ -1,12 +1,12 @@
-<%@page import="service.OwnerShopService"%>
-<%@page import="service.PaymentService"%>
-<%@page import="entity.Shop"%>
-<%@page import="service.ProductService"%>
-<%@page import="entity.Product"%>
+<%@page import="model.DAOs.OwnerShopDAO"%>
+<%@page import="model.DAOs.PaymentDAO"%>
+<%@page import="model.entity.Shop"%>
+<%@page import="model.DAOs.ProductDAO"%>
+<%@page import="model.entity.Product"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="entity.Cart"%>
-<%@page import="service.CartServive"%>
-<%@page import="entity.Client"%>
+<%@page import="model.entity.Cart"%>
+<%@page import="model.DAOs.CartDAO"%>
+<%@page import="model.entity.Client"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -44,13 +44,12 @@
   <div class="container">
     <section id="cart"> 
     <%
-
-         	long subtotal=0;
-     		if(itemsCartList!=null)
-     		for(Cart cart: itemsCartList){
-     	Product product=ProductService.getProductByID(cart.getProductID(), "product");
-     	Shop shop=OwnerShopService.getShopByID(product.getShopID(), "shop");
-     	subtotal+=cart.getQuantity()*(Long.parseLong(product.getSalePrice()));
+     long subtotal=0;
+               		if(itemsCartList!=null)
+               		for(Cart cart: itemsCartList){
+               	Product product=ProductDAO.getProductByID(cart.getProductID(), "product");
+               	Shop shop=OwnerShopDAO.getShopByID(product.getShopID(), "shop");
+               	subtotal+=cart.getQuantity()*(Long.parseLong(product.getSalePrice()));
      %>
       <article class="product">
         <header>
