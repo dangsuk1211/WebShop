@@ -1,4 +1,4 @@
-package model.entity;
+package model.entities;
 
 public class Payment {
 	private int paymentID;

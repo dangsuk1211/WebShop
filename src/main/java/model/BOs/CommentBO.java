@@ -1,4 +1,4 @@
-package model.DAOs;
+package model.BOs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import config.ConnectionSQL;
 import model.entities.Comment;
 
-public class CommentDAO {
+public class CommentBO {
 	public static ArrayList<Comment> getCommentsByProductID(int productID, String data) {
 		ArrayList<Comment>  commentList=new ArrayList<Comment>();
 		Connection connection=ConnectionSQL.getConnection();

@@ -1,4 +1,4 @@
-package model.DAOs;
+package model.BOs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import config.ConnectionSQL;
 import model.entities.Shop;
 
-public class OwnerShopDAO {
+public class OwnerShopBO {
     public static void addShopToData(Shop shop, String data) {
     	try {
     		Connection connection= ConnectionSQL.getConnection();

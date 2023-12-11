@@ -1,6 +1,6 @@
 <%@page import="model.DAOs.ProductDAO"%>
-<%@page import="model.entity.Shop"%>
-<%@page import="model.entity.Product"%>
+<%@page import="model.entities.Shop"%>
+<%@page import="model.entities.Product"%>
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -185,7 +185,7 @@ ArrayList<Product> productList=new ArrayList<Product>();
         <% if(productList!=null)
 			for(Product product: productList){
         %>
-                   <a class="Product" href="Trangchu/Product?id=<%=product.getId() %>&product=<%=product.getFewChar() %>&priceO=<%=Product.formMoney(product.getOriginalPrice()) %>&priceS=<%=Product.formMoney(product.getSalePrice()) %>&url=<%=product.getUrl()%>&shopID=<%=product.getShopID()%>">
+                   <a class="Product" href="<%=request.getContextPath() %>/Trangchu/Product?id=<%=product.getId() %>&product=<%=product.getFewChar() %>&priceO=<%=Product.formMoney(product.getOriginalPrice()) %>&priceS=<%=Product.formMoney(product.getSalePrice()) %>&url=<%=product.getUrl()%>&shopID=<%=product.getShopID()%>">
                         <div>
                             <span class="sale<%if(product.getOriginalPrice().equals(product.getSalePrice())) out.print(" close"); %>"><% try{out.print(Math.round((1-Long.parseLong(product.getSalePrice())*1.0/Long.parseLong(product.getOriginalPrice()))*100.0));} catch (Exception e) {out.print(0);}%>%</span>
                             <img src="<%=product.getUrl() %>" alt="tainghe-airpod" style="max-width: 250px;">

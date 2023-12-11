@@ -1,4 +1,4 @@
-<%@page import="model.entity.Product"%>
+<%@page import="model.entities.Product"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/WebShop/style/assets/css/stylePageHome.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/style/assets/css/stylePageHome.css">
 </head>
 <body>
 <%@ include file="/Pages/MasterPage/Header.jsp" %>
@@ -16,7 +16,7 @@
 	ArrayList<Product> productList= (ArrayList<Product>)request.getAttribute("productList");
 	for(Product product:productList){
 %>
-	                   <a class="Product" href="http://localhost:8080/WebShop/Trangchu/Product?id=<%=product.getId() %>&product=<%=product.getFewChar() %>&priceO=<%=Product.formMoney(product.getOriginalPrice()) %>&priceS=<%=Product.formMoney(product.getSalePrice()) %>&url=<%=product.getUrl()%>&shopID=<%=product.getShopID()%>">
+	                   <a class="Product" href="<%=request.getContextPath() %>/Trangchu/Product?id=<%=product.getId() %>&product=<%=product.getFewChar() %>&priceO=<%=Product.formMoney(product.getOriginalPrice()) %>&priceS=<%=Product.formMoney(product.getSalePrice()) %>&url=<%=product.getUrl()%>&shopID=<%=product.getShopID()%>">
                         <div>
                             <span class="sale<%if(product.getOriginalPrice().equals(product.getSalePrice())) out.print(" close"); %>"><%=Math.round((1-Long.parseLong(product.getSalePrice())*1.0/Long.parseLong(product.getOriginalPrice()))*100.0)%>%</span>
                             <img src="<%=product.getUrl() %>" alt="tainghe-airpod" style="max-width: 250px;">

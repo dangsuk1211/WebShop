@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.DAOs.ProductDAO;
-import model.entity.Product;
-import model.entity.Shop;
+import model.entities.Product;
+import model.entities.Shop;
 
 @WebServlet(urlPatterns = "/Trangchu/OwnerShop")
-public class PageOwnerShop extends HttpServlet {
+public class OwnerShopServlet extends HttpServlet {
 
 	/**
 	 * 

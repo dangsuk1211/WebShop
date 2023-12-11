@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/WebShop/style/assets/css/erorPage.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/style/assets/css/erorPage.css">
 </head>
 <body>
 <div class="container">
@@ -28,7 +28,7 @@
 		
 		<div class="page-ms">
 			<p class="page-msg"> Oops, the page you're looking for Disappeared </p>
-			<button class="go-back">Go Back</button>
+			<button class="go-back"><a href="<%=request.getContextPath() %>/Trangchu" >Go Back</a></button> 
 		</div>
 </div>
 	</div>

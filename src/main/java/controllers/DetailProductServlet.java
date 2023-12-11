@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.DAOs.CommentDAO;
-import model.entity.Client;
-import model.entity.Comment;
-import model.entity.Product;
+import model.entities.Client;
+import model.entities.Comment;
+import model.entities.Product;
 
 
 @WebServlet(urlPatterns = "/Trangchu/Product")
-public class DetailProduct extends HttpServlet{
+public class DetailProductServlet extends HttpServlet{
 
 	/**
 	 * 

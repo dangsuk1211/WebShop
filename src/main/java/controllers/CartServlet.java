@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import java.io.IOException;
 
@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.DAOs.CartDAO;
-import model.entity.Client;
+import model.entities.Client;
 
 @WebServlet("/Trangchu/GioHang")
-public class PageCart extends HttpServlet {
+public class CartServlet extends HttpServlet {
 
 	/**
 	 * 

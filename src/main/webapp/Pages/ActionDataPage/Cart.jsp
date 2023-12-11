@@ -1,12 +1,12 @@
 <%@page import="model.DAOs.OwnerShopDAO"%>
 <%@page import="model.DAOs.PaymentDAO"%>
-<%@page import="model.entity.Shop"%>
+<%@page import="model.entities.Shop"%>
 <%@page import="model.DAOs.ProductDAO"%>
-<%@page import="model.entity.Product"%>
+<%@page import="model.entities.Product"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.entity.Cart"%>
+<%@page import="model.entities.Cart"%>
 <%@page import="model.DAOs.CartDAO"%>
-<%@page import="model.entity.Client"%>
+<%@page import="model.entities.Client"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -32,8 +32,8 @@
 <body>
 
   <%@ include file="/Pages/MasterPage/Header.jsp" %>
-  <link href="/WebShop/style/assets/css/notify.css" rel="stylesheet" />
-  <link href="/WebShop/style/assets/css/stylePageCart.css" rel="stylesheet" />
+  <link href="<%=request.getContextPath() %>/style/assets/css/notify.css" rel="stylesheet" />
+  <link href="<%=request.getContextPath() %>/style/assets/css/stylePageCart.css" rel="stylesheet" />
       
   <header id="site-header">
     <div class="container">

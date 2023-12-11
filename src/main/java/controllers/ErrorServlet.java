@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/CannotAccess")
-public class PageEror extends HttpServlet {
+public class ErrorServlet extends HttpServlet {
 	/**
 	 * 
 	 */

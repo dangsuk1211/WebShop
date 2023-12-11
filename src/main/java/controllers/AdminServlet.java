@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import java.io.IOException;
 
@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.DAOs.PaymentDAO;
-import model.entity.Product;
+import model.entities.Product;
 
 @WebServlet(urlPatterns = "/Admin")
-public class PageAdmin extends HttpServlet{
+public class AdminServlet extends HttpServlet{
 
 
 	/**

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.entity.Client;
+import model.entities.Client;
 
 /**
  * Servlet Filter implementation class FilterAccountUser

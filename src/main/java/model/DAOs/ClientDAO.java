@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import config.ConnectionSQL;
-import model.entity.Client;
+import model.entities.Client;
 
 
 public class ClientDAO {
@@ -26,9 +26,9 @@ public class ClientDAO {
     		stm.executeUpdate();
     		stm.close();
 			connection.close();
-			System.out.println("Add into database successed!");
+			System.out.println("Add client into database successed!");
 		} catch (SQLException e) {
-			System.out.println("Add into database failed!");
+			System.out.println("Add client into database failed!");
 			e.printStackTrace();
 		}
     }
@@ -42,11 +42,11 @@ public class ClientDAO {
 				clientList.add(new Client(rs.getInt("clientID"), rs.getString("user"), rs.getString("pass"),rs.getString("money"),
 						rs.getString("fullname"),rs.getDate("birthday").toString(),rs.getString("address"),rs.getString("phone"),rs.getString("image")));
 			}
-			System.out.println("Get database successed!");
+			System.out.println("Get client database successed!");
 			connection.close();
 			return clientList;
 		} catch (SQLException e) {
-			System.out.println("Get database failed!");
+			System.out.println("Get client database failed!");
 			e.printStackTrace();
 		}
     	
@@ -57,14 +57,14 @@ public class ClientDAO {
     		Connection connection=ConnectionSQL.getConnection();
 			Statement stm=connection.createStatement();
 			ResultSet rs=stm.executeQuery(String.format("Select * from %s where clientID=%d",data,clientID));
-			System.out.println("Get database successed!");
+			System.out.println("Get client database successed!");
 			if(rs.next()) {
 				return new Client(rs.getInt("clientID"), rs.getString("user"), rs.getString("pass"),rs.getString("money"),
 						rs.getString("fullname"),rs.getDate("birthday").toString(),rs.getString("address"),rs.getString("phone"),rs.getString("image"));
 			}
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("Get database failed!");
+			System.out.println("Get client database failed!");
 			e.printStackTrace();
 		}
     	
@@ -79,10 +79,10 @@ public class ClientDAO {
 				return new Client(rs.getInt("clientID"), rs.getString("user"), rs.getString("pass"),rs.getString("money"),
 						rs.getString("fullname"),rs.getDate("birthday").toString(),rs.getString("address"),rs.getString("phone"),rs.getString("image"));
 			}
-			System.out.println("Get database successed!");
+			System.out.println("Get client database successed!");
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("Get database failed!");
+			System.out.println("Get client database failed!");
 			e.printStackTrace();
 		}
 		return null;
@@ -95,9 +95,9 @@ public class ClientDAO {
 					data,client.getUser(),client.getPassword(),client.getFullName(),client.getBirthday(),client.getAddress(),
 					client.getPhone(),client.getImage(),client.getId()));
 			connection.close();
-			System.out.println("Update in database successed!");
+			System.out.println("Update account in database successed!");
 		} catch (SQLException e) {
-			System.out.println("Update in database failed!");
+			System.out.println("Update account in database failed!");
 			e.printStackTrace();
 		}
     }

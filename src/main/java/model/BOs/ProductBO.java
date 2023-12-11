@@ -1,4 +1,4 @@
-package model.DAOs;
+package model.BOs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import config.ConnectionSQL;
 import model.entities.Product;
 
-public class ProductDAO {
+public class ProductBO {
     public static ArrayList<Product> getProductFromData(String data){
     	try {
     		ArrayList<Product> productList=new ArrayList<Product>();

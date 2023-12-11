@@ -1,15 +1,15 @@
 
 <%@page import="model.DAOs.ClientDAO"%>
 <%@page import="model.DAOs.CategoryDAO"%>
-<%@page import="model.entity.Category"%>
+<%@page import="model.entities.Category"%>
 <%@page import="model.DAOs.CartDAO"%>
-<%@page import="model.entity.Cart"%>
+<%@page import="model.entities.Cart"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.entity.Product"%>
-<%@page import="model.entity.Client"%>
+<%@page import="model.entities.Product"%>
+<%@page import="model.entities.Client"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <link rel="stylesheet" href="/WebShop/style/assets/css/bullma_css.css">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/style/assets/css/bullma_css.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
      <style>
         .navbar{
@@ -112,7 +112,7 @@ padding: 0;
         %>
 <nav class="navbar " style="background-color: #ee4d2d; ">
         <div class="navbar-brand"  >
-          <a class="navbar-item" href="http://localhost:8080/WebShop/Trangchu" style="color: #FFFF; font-size: 18px">
+          <a class="navbar-item" href="<%=request.getContextPath() %>/Trangchu" style="color: #FFFF; font-size: 18px">
             Trang chủ
           </a>
       
@@ -126,7 +126,7 @@ padding: 0;
         <div id="navMenubd-example" class="navbar-menu">
           <div class="navbar-start">
             <div class="navbar-item has-dropdown is-hoverable is-mega">
-              <a class="navbar-link flex" style="color: #FFFF;" href="http://localhost:8080/WebShop/Trangchu/ProductMenu">
+              <a class="navbar-link flex" style="color: #FFFF;" href="<%=request.getContextPath() %>/Trangchu/ProductMenu">
                 Sản Phẩm
               </a>
               <div id="blogDropdown" class="navbar-dropdown " data-style="width: 18rem;">
@@ -138,7 +138,7 @@ padding: 0;
                       	for(Category category: categoryList){
                             count++;
                       %>
-                      <a class="navbar-item" href="http://localhost:8080/WebShop/Trangchu/ProductMenu?categoryID=<%=category.getCategoryID()%>">
+                      <a class="navbar-item" href="<%=request.getContextPath() %>/Trangchu/ProductMenu?categoryID=<%=category.getCategoryID()%>">
                         <div class="navbar-content">
                           <p><%=category.getNameCategory() %></p>
                         </div>
@@ -188,11 +188,11 @@ padding: 0;
                   <div class="level is-mobile">
                     <div class="level-left">
                       <div class="level-item">
-                        <p>
+                  
                           <strong>HOTLINE <i class="fa fa-volume-control-phone" aria-hidden="true"></i></strong>
                           
                           <p style="padding-left: 20px; font-size: large;"> 0111244899</p>
-                        </p>
+                   
                       </div>
                     </div>
                     <div class="level-right">
@@ -206,7 +206,7 @@ padding: 0;
                 </a>
               </div>
             </div>
-            <a class="navbar-item " href="http://localhost:8080/WebShop/Trangchu/GioHang" style="color: #FFFF ;">
+            <a class="navbar-item " href="<%=request.getContextPath() %>/Trangchu/GioHang" style="color: #FFFF ;">
               <span <%= client==null||itemsCartList.size()==0 ? "class=\"close\"":""%> style="height: 18px;background-color: darkorange; width: 18px; border-radius: 50%;position: absolute; left: 0;top: 10px; font-size: small;
               font-size: small;text-align: center;">
               <%if(client!=null){
@@ -221,7 +221,7 @@ padding: 0;
             <div class="navbar-item">
               <div class="field is-grouped">
                 <p class="control">
-                  <a  style="color: #ee4d2d!important;" class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet" data-social-target="" target="_blank" href="<%= client!=null? "http://localhost:8080/WebShop/Trangchu/Payment":"https://twitter.com" %>">
+                  <a  style="color: #ee4d2d!important;" class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet" data-social-target="" target="_blank" href="<%= client!=null? request.getContextPath()+"/Trangchu/Payment":"https://twitter.com" %>">
                     <span class="icon">
                       <%if(client!=null) out.print("<i class=\"fa fa-money\" aria-hidden=\"true\"></i>");else out.print("<i class=\"fa fa-twitter\"></i>");%>
                     </span>
@@ -236,18 +236,17 @@ padding: 0;
                  <%if(accesser!=null)
                   switch(accesser){
                 	  case "user":
-                		  if(client!=null)
-                  		out.print("http://localhost:8080/WebShop/Trangchu/Account");
-                		  else out.print("http://localhost:8080/WebShop/Trangchu/SignUpIn");
+                		  if(client!=null) out.print(request.getContextPath()+"/Trangchu/Account");
+                		  else out.print(request.getContextPath() +"/Trangchu/SignUpIn");
                   		break;
                 	  case "shop":
-                		 if(ses.getAttribute("shop")!=null)
-                    	out.print("http://localhost:8080/WebShop/Trangchu/OwnerShop");
-                		 else out.print("http://localhost:8080/WebShop/Trangchu/SignUpIn");
+                		 if(ses.getAttribute("shop")!=null) out.print(request.getContextPath() +"/Trangchu/OwnerShop");
+                		 else out.print(request.getContextPath()+"/Trangchu/SignUpIn");
                       	break;
                 	  default:
-                		  out.print("http://localhost:8080/WebShop/Trangchu/SignUpIn");}
-                 else out.print("http://localhost:8080/WebShop/Trangchu/SignUpIn");
+                		  out.print(request.getContextPath() +"/Trangchu/SignUpIn");
+                	}
+                 else out.print(request.getContextPath()+"/Trangchu/SignUpIn");
                 %>">
 
                     <span style="color: #ee4d2d;"><%if(client!=null) out.print(client.getFullName());else out.print("Tài Khoản"); %> <i class="fa fa-user" aria-hidden="true"  style="font-size: 18px; display:contents"></i></span>

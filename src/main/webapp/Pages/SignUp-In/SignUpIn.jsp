@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-<link rel="stylesheet" href="/WebShop/style/assets/css/stylePageSignIN_UP.css" />
+<link rel="stylesheet" href="<%=request.getContextPath() %>/style/assets/css/stylePageSignIN_UP.css" />
 
 <title>Shop</title>
 </head>
@@ -20,7 +20,7 @@
     <button id="up">Sign up</button>
   </div>
   <%if(eror!=null) out.print(eror);%>
-    <a href="/WebShop/Trangchu">← Trở về trang chủ</a>
+    <a href="<%=request.getContextPath() %>/Trangchu">← Trở về trang chủ</a>
     <div class="container close" id="container">
         <div class="form-container sign-up-container">
             <h1 class="header--iconclose js--close--pay" style="padding: 16px;position: absolute;top: 0;right: 0;cursor: pointer;"><i class="fa fa-times" style="font-size: 18px;" ></i></h1>

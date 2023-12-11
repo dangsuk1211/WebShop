@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import config.ConnectionSQL;
-import model.entity.Category;
+import model.entities.Category;
 
 public class CategoryDAO {
     public static String getCategory(int categoryID, String data) {
@@ -19,11 +19,11 @@ public class CategoryDAO {
 			if (rs.next()) {
 				name= rs.getString("nameCategory");
 			}
-			System.out.println("Get database successed!");
+			System.out.println("Get Category database successed!");
 			connection.close();
 			return name;
 		} catch (SQLException e) {
-			System.out.println("Get database failed!");
+			System.out.println("Get Category database failed!");
 			e.printStackTrace();
 		}
 		return null;
@@ -37,11 +37,11 @@ public class CategoryDAO {
 			while (rs.next()) {
 				categoryList.add(new Category(rs.getInt("categoryID"),rs.getString("nameCategory")));
 			}
-			System.out.println("Get database successed!");
+			System.out.println("Get categories database successed!");
 			connection.close();
 			return categoryList;
 		} catch (SQLException e) {
-			System.out.println("Get database failed!");
+			System.out.println("Get categories database failed!");
 			e.printStackTrace();
 		}
 		return null;

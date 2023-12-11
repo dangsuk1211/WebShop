@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,11 +13,11 @@ import javax.servlet.http.HttpSession;
 
 import model.DAOs.ClientDAO;
 import model.DAOs.OwnerShopDAO;
-import model.entity.Client;
-import model.entity.Product;
-import model.entity.Shop;
+import model.entities.Client;
+import model.entities.Product;
+import model.entities.Shop;
 @WebServlet(urlPatterns = "/Trangchu/SignUpIn")
-public class SignUpIn extends HttpServlet{
+public class SignUpInServlet extends HttpServlet{
 	/**
 	 * 
 	 */
@@ -103,7 +103,7 @@ public class SignUpIn extends HttpServlet{
 	    	resp.sendRedirect(req.getContextPath()+"/Trangchu/OwnerShop");
 	    } else {
 	    	ses.setAttribute("eror", "Tài khoản hoặc mật khẩu không đúng.");
-	    	req.getRequestDispatcher("/Pages/SignUp-In/SignUpIn.jsp").forward(req, resp);
+	    	resp.sendRedirect(req.getContextPath()+"/Pages/SignUp-In/SignUpIn.jsp");
 	    }
 	    }
 	}

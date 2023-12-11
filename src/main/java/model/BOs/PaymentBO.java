@@ -1,4 +1,4 @@
-package model.DAOs;
+package model.BOs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +11,7 @@ import config.ConnectionSQL;
 import model.entities.Payment;
 import model.entities.Product;
 
-public class PaymentDAO {
+public class PaymentBO {
 	public static ArrayList<Payment> getPayments( String data) {
 		ArrayList<Payment> paymentList=new ArrayList<Payment>();
 		Connection connection=ConnectionSQL.getConnection();

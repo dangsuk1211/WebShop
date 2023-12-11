@@ -1,6 +1,6 @@
-<%@page import="model.entity.Comment"%>
+<%@page import="model.entities.Comment"%>
 <%@page import="model.DAOs.CommentDAO"%>
-<%@page import="model.entity.Product"%>
+<%@page import="model.entities.Product"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -17,7 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
   	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
- 	<link rel="stylesheet" href="/WebShop/style/assets/css/stylePageProduct.css">
+ 	<link rel="stylesheet" href="<%=request.getContextPath() %>/style/assets/css/stylePageProduct.css">
  	<style type="text/css">
  		.product-info-tabs>.nav>li{
  		padding: 0 ;

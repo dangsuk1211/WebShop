@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="/WebShop/style/assets/css/stylePagePayment.css" rel="stylesheet" />
+<link href="<%=request.getContextPath() %>/style/assets/css/stylePagePayment.css" rel="stylesheet" />
 <title>Shop MALL</title>
 <link href="https://fonts.googleapis.com/css?family=Raleway|Rock+Salt|Source+Code+Pro:300,400,600" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -154,8 +154,8 @@
         </div>
     </div>
 
-   <script type="text/javascript" src="/WebShop/style/assets/js/js-pagePayment.js"></script>
-   <script src="/WebShop/style/assets/js/simple.money.format.js"></script>
+   <script type="text/javascript" src="<%=request.getContextPath() %>/style/assets/js/js-pagePayment.js"></script>
+   <script src="<%=request.getContextPath() %>/style/assets/js/simple.money.format.js"></script>
    <script type="text/javascript">
    $('#money').simpleMoneyFormat();
    const button = document.querySelector('.button');
