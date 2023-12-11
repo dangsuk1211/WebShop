@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.DAOs.ClientDAO;
-import model.DAOs.OwnerShopDAO;
+import model.BOs.ClientBO;
+import model.BOs.OwnerShopBO;
 import model.entities.Client;
 import model.entities.Product;
 import model.entities.Shop;
@@ -53,7 +53,7 @@ public class SignUpInServlet extends HttpServlet{
 			String phone=(String)req.getParameter("phone");
 			String birthday=(String)req.getParameter("birthday");
 			Client client=new Client(0,user,pass,"0",name,birthday,address,phone,null);
-			ClientDAO.addClientToData(client, "client");
+			ClientBO.addClientToData(client);
 			ses.setAttribute("accesser","user");
 			ses.setAttribute("user", client);
 			resp.sendRedirect(req.getContextPath()+"/Trangchu");
@@ -64,7 +64,7 @@ public class SignUpInServlet extends HttpServlet{
 			String nameShop=(String)req.getParameter("nameShop");
 			String urlAvatar=(String)req.getParameter("urlAvatar");
 			Shop shop=new Shop(0, user, pass, nameShop,urlAvatar);
-			OwnerShopDAO.addShopToData(shop, "shop");
+			OwnerShopBO.addShopToData(shop);
 			ses.setAttribute("accesser","shop");
 			ses.setAttribute("shop", shop);
 			resp.sendRedirect(req.getContextPath()+"/Trangchu/OwnerShop");
@@ -72,14 +72,14 @@ public class SignUpInServlet extends HttpServlet{
 		case "login":
 			user=(String)req.getParameter("user");
 			pass=(String)req.getParameter("password");
-			Client object1=ClientDAO.getAccesser(user, pass,"client");
+			Client object1=ClientBO.getAccesser(user, pass);
 			if(object1!=null)
 			{
 				ses.setAttribute("accesser", "user");
 				ses.setAttribute("user", object1);
 				break;
 			}
-			Shop object2=OwnerShopDAO.getAccesser(user, pass, "shop");
+			Shop object2=OwnerShopBO.getAccesser(user, pass);
 			if(object2!=null)
 			{
 				ses.setAttribute("accesser", "shop");

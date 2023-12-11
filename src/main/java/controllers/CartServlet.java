@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.DAOs.CartDAO;
+import model.BOs.CartBO;
 import model.entities.Client;
 
 @WebServlet("/Trangchu/GioHang")
@@ -32,15 +32,15 @@ public class CartServlet extends HttpServlet {
 			int quantity;
 			switch (actionCart) {
 			case "remove":
-				CartDAO.deleteItemInCart(cartID, "cart");
+				CartBO.deleteItemInCart(cartID);
 				break;
 			case "plus":
 				quantity = Integer.parseInt(req.getParameter("quantity"));
-				CartDAO.increaseItemInCart(cartID, quantity, "cart");
+				CartBO.increaseItemInCart(cartID, quantity);
 				break;
 			case "minus":
 				quantity = Integer.parseInt(req.getParameter("quantity"));
-				CartDAO.decreaseItemInCart(cartID, quantity, "cart");
+				CartBO.decreaseItemInCart(cartID, quantity);
 				break;
 			default:
 				break;
@@ -58,7 +58,7 @@ public class CartServlet extends HttpServlet {
 		HttpSession ses = req.getSession();
 		Client client = (Client) ses.getAttribute("user");
 		long totalMoney = Long.parseLong(req.getParameter("totalMoney"));
-		CartDAO.paymentInCart(client.getId(), totalMoney, "cart", "client");
+		CartBO.paymentInCart(client.getId(), totalMoney);
 		resp.sendRedirect(req.getContextPath()+"/Trangchu/GioHang");
 	}
 }

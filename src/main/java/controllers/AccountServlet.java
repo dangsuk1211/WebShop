@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.DAOs.ClientDAO;
+
+import model.BOs.ClientBO;
 import model.entities.Client;
 
 @WebServlet("/Trangchu/Account")
@@ -51,7 +52,7 @@ public class AccountServlet extends HttpServlet {
 		String image = (String) req.getParameter("image");
 		Client client = new Client(clientID, user, pass, money, name, birthday, address, phone,
 				image);
-		ClientDAO.updateAccountInData(client, "client");
+		ClientBO.updateAccountInData(client);
 		ses.setAttribute("user", client);
 		resp.sendRedirect(req.getContextPath() + "/Trangchu");
 	}

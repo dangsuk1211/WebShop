@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.DAOs.PaymentDAO;
+import model.BOs.PaymentBO;
 import model.entities.Product;
 
 @WebServlet(urlPatterns = "/Admin")
@@ -44,11 +44,11 @@ public class AdminServlet extends HttpServlet{
 		case "payment":
 			String status=req.getParameter("status");
 			int paymentID=Integer.parseInt(req.getParameter("paymentID"));
-			if(!status.equals("3")) PaymentDAO.updateStatusPayment(paymentID, status, "payment");
-			else PaymentDAO.deletePayment(paymentID, "payment");
+			if(!status.equals("3")) PaymentBO.updateStatusPayment(paymentID, status);
+			else PaymentBO.deletePayment(paymentID);
 			break;
 		case "submit":
-			PaymentDAO.updatePaymentsMoney("payment","client");
+			PaymentBO.updatePaymentsMoney();
 			break;
 //		case "DELETE":
 //			productID=Integer.parseInt(req.getParameter("pID"));

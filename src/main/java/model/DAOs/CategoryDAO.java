@@ -10,12 +10,12 @@ import config.ConnectionSQL;
 import model.entities.Category;
 
 public class CategoryDAO {
-    public static String getCategory(int categoryID, String data) {
+    public static String findByCategoryId(int categoryID) {
     	try {
     		String name=null;
     		Connection connection=ConnectionSQL.getConnection();
 			Statement stm=connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("Select (nameCategory) from %s where categoryID=%d",data,categoryID));
+			ResultSet rs=stm.executeQuery(String.format("Select (nameCategory) from category where categoryID=%d",categoryID));
 			if (rs.next()) {
 				name= rs.getString("nameCategory");
 			}
@@ -28,12 +28,12 @@ public class CategoryDAO {
 		}
 		return null;
     }
-    public static ArrayList<Category> getCategorysInData(String data) {
+    public static ArrayList<Category> findAll() {
     	try {
     		ArrayList<Category> categoryList=new ArrayList<Category>();
     		Connection connection=ConnectionSQL.getConnection();
 			Statement stm=connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("Select * from %s",data));
+			ResultSet rs=stm.executeQuery(String.format("Select * from category"));
 			while (rs.next()) {
 				categoryList.add(new Category(rs.getInt("categoryID"),rs.getString("nameCategory")));
 			}

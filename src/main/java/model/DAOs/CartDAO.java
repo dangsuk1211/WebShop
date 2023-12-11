@@ -11,14 +11,14 @@ import config.ConnectionSQL;
 import model.entities.Cart;
 
 public class CartDAO {
-    public static void addCartToData(Cart cart, String data) {
+    public static void insert(int quantity,String feature,int clientID,int productID) {
     	try {
     		Connection connection=ConnectionSQL.getConnection();
-    		PreparedStatement stm=connection.prepareStatement("Insert Into "+data+" (quantity,feature,client_clientID,product_productID) values(?,?,?,?)");
-			stm.setInt(1, cart.getQuantity());
-			stm.setString(2, cart.getFeature());
-			stm.setInt(3, cart.getClientID());
-			stm.setInt(4, cart.getProductID());
+    		PreparedStatement stm=connection.prepareStatement("Insert Into cart (quantity,feature,client_clientID,product_productID) values(?,?,?,?)");
+			stm.setInt(1, quantity);
+			stm.setString(2, feature);
+			stm.setInt(3, clientID);
+			stm.setInt(4, productID);
     		stm.executeUpdate();
     		stm.close();
 			connection.close();
@@ -28,14 +28,14 @@ public class CartDAO {
 			e.printStackTrace();
 		}
     }
-    public static ArrayList<Cart> getAllItemsCart(String data) {
+    public static ArrayList<Cart> findAll() {
     	try {
     		ArrayList<Cart> itemsCartList=new ArrayList<Cart>();
     		Connection connection=ConnectionSQL.getConnection();
 			Statement stm=connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("Select * from %s",data));
+			ResultSet rs=stm.executeQuery("Select * from cart");
 			while (rs.next()) {
-				itemsCartList.add(new Cart(rs.getInt("clientID"), rs.getInt("quantity"), rs.getString("feature"),rs.getInt("client_clientID"),rs.getInt("product_productID")));
+				itemsCartList.add(new Cart(rs.getInt("cartID"), rs.getInt("quantity"), rs.getString("feature"),rs.getInt("client_clientID"),rs.getInt("product_productID")));
 			}
 			System.out.println("Get item in cart database successed!");
 			connection.close();
@@ -47,11 +47,11 @@ public class CartDAO {
     	
 		return null;
     }
-    public static int getNumItemCartByClient(int clientID,String data) {
+    public static int countByClientId(int clientID) {
     	try {
     		Connection connection=ConnectionSQL.getConnection();
 			Statement stm=connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("SELECT COUNT(*) FROM %s WHERE client_clientID=%d;",data,clientID));
+			ResultSet rs=stm.executeQuery(String.format("SELECT COUNT(*) FROM cart WHERE client_clientID=%d;",clientID));
 			System.out.println("Get number of item in cart database successed!");
 			connection.close();
 			if (rs.next()) {
@@ -64,12 +64,12 @@ public class CartDAO {
     	
 		return 0;	
     }
-    public static ArrayList<Cart> getItemsCartByClient(int clientID,String data) {
+    public static ArrayList<Cart> findByClientId(int clientID) {
     	try {
     		ArrayList<Cart> itemsCartList=new ArrayList<Cart>();
     		Connection connection=ConnectionSQL.getConnection();
 			Statement stm=connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("SELECT * FROM %s WHERE client_clientID=%d;",data,clientID));
+			ResultSet rs=stm.executeQuery(String.format("SELECT * FROM cart WHERE client_clientID=%d;",clientID));
 			while (rs.next()) {
 				itemsCartList.add(new Cart(rs.getInt("cartID"), rs.getInt("quantity"), rs.getString("feature"),rs.getInt("client_clientID"),rs.getInt("product_productID")));
 			}
@@ -80,11 +80,11 @@ public class CartDAO {
 		}	
 		return null;	
     }
-    public static void deleteItemInCart(int cartID, String data) {
+    public static void deleteByCartId(int cartID) {
     	try {
     		Connection connection=ConnectionSQL.getConnection();
 			Statement stm=connection.createStatement();
-			stm.executeUpdate(String.format("DELETE FROM %s WHERE cartID=%d;",data,cartID));
+			stm.executeUpdate(String.format("DELETE FROM cart WHERE cartID=%d;",cartID));
 			connection.close();
 			System.out.println("Delete item in database successed!");
 		} catch (SQLException e) {
@@ -92,17 +92,12 @@ public class CartDAO {
 			e.printStackTrace();
 		}
     }
-    public static void decreaseItemInCart(int cartID,int quantity, String data) {
+    public static void updateQuantityByCartId(int cartID,int quantity) {
     	try {
     		Connection connection= ConnectionSQL.getConnection();
 			Statement stm=connection.createStatement();
-			if(quantity==1) {
-				stm.executeUpdate(String.format("DELETE FROM %s WHERE cartID=%d;",data,cartID));
-			}
-			else {
-			stm.executeUpdate(String.format("UPDATE %s SET quantity=%d WHERE cartID=%d;",
-					data,quantity-1,cartID));
-			}
+
+			stm.executeUpdate(String.format("UPDATE cart SET quantity=%d WHERE cartID=%d;",quantity,cartID));
 			connection.close();
 			System.out.println("Update cart in database successed!");
 		} catch (SQLException e) {
@@ -110,26 +105,13 @@ public class CartDAO {
 			e.printStackTrace();
 		}
     }
-    public static void increaseItemInCart(int cartID,int quantity, String data) {
-    	try {
-    		Connection connection= ConnectionSQL.getConnection();
-			Statement stm=connection.createStatement();
-			stm.executeUpdate(String.format("UPDATE %s SET quantity=%d WHERE cartID=%d;",
-					data,quantity+1,cartID));
-			connection.close();
-			System.out.println("Update cart in database successed!");
-		} catch (SQLException e) {
-			System.out.println("Update cart in database failed!");
-			e.printStackTrace();
-		}
-    }
-    public static void paymentInCart(int clientID,long money, String dataCart, String dataClient) {
+
+    public static void deleteByClientId(int clientID) {
     	try {
     		Connection connection=ConnectionSQL.getConnection();
 			Statement stm=connection.createStatement();
-			stm.executeUpdate(String.format("DELETE FROM %s WHERE client_clientID=%d;",dataCart,clientID));
-			stm=connection.createStatement();
-			stm.executeUpdate(String.format("Update %s set money=money-%d WHERE clientID=%d",dataClient,money,clientID));
+			stm.executeUpdate(String.format("DELETE FROM cart WHERE client_clientID=%d;",clientID));
+			
 			connection.close();
 			System.out.println("Delete cart in database successed!");
 		} catch (SQLException e) {

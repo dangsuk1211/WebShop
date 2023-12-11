@@ -12,13 +12,13 @@ import model.entities.Payment;
 import model.entities.Product;
 
 public class PaymentDAO {
-	public static ArrayList<Payment> getPayments( String data) {
+	public static ArrayList<Payment> findAll() {
 		ArrayList<Payment> paymentList=new ArrayList<Payment>();
 		Connection connection=ConnectionSQL.getConnection();
 		Statement stm;
 		try {
 			stm = connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("Select * from %s",data));
+			ResultSet rs=stm.executeQuery("Select * from payment");
 			while (rs.next()) {
 				paymentList.add(new Payment(rs.getInt("paymentID"), rs.getString("cardholderName"), rs.getString("nameAccount"),
 						rs.getInt("status"), rs.getInt("clientID"),rs.getString("money")));
@@ -31,15 +31,15 @@ public class PaymentDAO {
 		return paymentList;
 		
 	}
-    public static void addPaymentToData(Payment pay, String data) {
+    public static void insert(String cardholderName,String nameAccount, String status, int clientId, String money) {
     	try {
     		Connection connection= ConnectionSQL.getConnection();
-    		PreparedStatement stm=connection.prepareStatement("Insert Into "+data+" (cardholderName,nameAccount,status,clientID,money) values(?,?,?,?,?)");
-			stm.setString(1, pay.getCardholderName());
-			stm.setString(2, pay.getNameAccount());
-			stm.setString(3, ""+pay.getStatus());
-			stm.setInt(4, pay.getClientID());
-			stm.setString(5, pay.getMoney());
+    		PreparedStatement stm=connection.prepareStatement("Insert Into payment (cardholderName,nameAccount,status,clientID,money) values(?,?,?,?,?)");
+			stm.setString(1, cardholderName);
+			stm.setString(2, nameAccount);
+			stm.setString(3, status);
+			stm.setInt(4, clientId);
+			stm.setString(5, money);
     		stm.executeUpdate();
 			connection.close();
 			stm.close();
@@ -49,42 +49,42 @@ public class PaymentDAO {
 			e.printStackTrace();
 		}
     }
-    public static void updateStatusPayment(int paymentID,String status, String data) {
+    public static void updateStatusByPaymentId(int paymentID,String status) {
     	try {
     		Connection connection= ConnectionSQL.getConnection();
 			Statement stm=connection.createStatement();
-    		stm.executeUpdate(String.format("UPDATE %s SET status=%s WHERE paymentID=%d",data,status,paymentID));
+    		stm.executeUpdate(String.format("UPDATE payment SET status=%s WHERE paymentID=%d",status,paymentID));
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
     }
-    public static void deletePayment(int paymentID, String data) {
+    public static void deleteByPaymentId(int paymentID) {
     	try {
     		Connection connection= ConnectionSQL.getConnection();
 			Statement stm=connection.createStatement();
-    		stm.executeUpdate(String.format("DELETE FROM %s WHERE paymentID=%d;",data,paymentID));
+    		stm.executeUpdate(String.format("DELETE FROM payment WHERE paymentID=%d;",paymentID));
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
     }
-    public static void updatePaymentsMoney(String data1,String data2) {
+    public static void updatePaymentsMoney() {
     	try {
     		Connection connection= ConnectionSQL.getConnection();
 			Statement stm=connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("SELECT paymentID,clientID,money,status FROM %s WHERE status!=%d;",data1,0));
+			ResultSet rs=stm.executeQuery(String.format("SELECT paymentID,clientID,money,status FROM payment WHERE status!=%d;",0));
 			while(rs.next()) {
 				stm=connection.createStatement();
 				if(rs.getInt("status")==1) {
 				stm=connection.createStatement();
-				stm.executeUpdate(String.format("Update %s set money=money+%d WHERE clientID=%d",data2,Integer.parseInt(Product.form(rs.getString("money"))),rs.getInt("clientID")));
+				stm.executeUpdate(String.format("Update client set money=money+%d WHERE clientID=%d",Integer.parseInt(Product.form(rs.getString("money"))),rs.getInt("clientID")));
 				stm=connection.createStatement();
-				stm.executeUpdate(String.format("DELETE FROM %s WHERE paymentID=%d;",data1,rs.getInt("paymentID")));
+				stm.executeUpdate(String.format("DELETE FROM payment WHERE paymentID=%d;",rs.getInt("paymentID")));
 				}
 				else {
 					stm=connection.createStatement();
-					stm.executeUpdate(String.format("DELETE FROM %s WHERE paymentID=%d;",data1,rs.getInt("paymentID")));
+					stm.executeUpdate(String.format("DELETE FROM payment WHERE paymentID=%d;",rs.getInt("paymentID")));
 				}
 			}
 			connection.close();

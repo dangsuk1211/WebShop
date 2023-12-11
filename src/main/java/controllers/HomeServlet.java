@@ -10,8 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.DAOs.CartDAO;
-import model.DAOs.OwnerShopDAO;
+
+import model.BOs.CartBO;
+import model.BOs.OwnerShopBO;
 import model.entities.Cart;
 import model.entities.Shop;
 
@@ -28,7 +29,7 @@ public class HomeServlet extends HttpServlet{
 	    resp.setCharacterEncoding("UTF-8");
 	    resp.setContentType("text/html; charset=UTF-8");
 		ArrayList<Shop> shopList=new ArrayList<Shop>();
-		shopList= OwnerShopDAO.getShops("shop");
+		shopList= OwnerShopBO.getShops();
 		req.setAttribute("shopList", shopList);
 		RequestDispatcher dispatcher=req.getRequestDispatcher("/Home.jsp");
 		dispatcher.forward(req, resp);
@@ -41,7 +42,7 @@ public class HomeServlet extends HttpServlet{
 	    int productID=Integer.parseInt(req.getParameter("productID"));
 	    int clientID=Integer.parseInt(req.getParameter("clientID"));
 	    Cart cart=new Cart(0, 1, "", clientID, productID );
-	    CartDAO.addCartToData(cart, "cart");
+	    CartBO.addCartToData(cart);
 		resp.sendRedirect(req.getContextPath()+"/Trangchu");
 	}
 }

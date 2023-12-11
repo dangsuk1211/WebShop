@@ -10,37 +10,40 @@ import java.util.ArrayList;
 import config.ConnectionSQL;
 import model.entities.Client;
 
-
 public class ClientDAO {
-    public static void addClientToData(Client client, String data) {
-    	try {
-    		Connection connection=ConnectionSQL.getConnection();
-    		PreparedStatement stm=connection.prepareStatement("Insert Into "+data+" (user,pass,money,fullname,birthday,address,phone) values(?,?,?,?,?,?,?)");
-			stm.setString(1, client.getUser());
-			stm.setString(2, client.getPassword());
-			stm.setString(3, client.getMoney());
-			stm.setString(4, client.getFullName());
-			stm.setString(5, client.getBirthday());
-			stm.setString(6, client.getAddress());
-			stm.setString(7, client.getPhone());
-    		stm.executeUpdate();
-    		stm.close();
+	public static void insert(String user, String password, String money, String fullname, String birthday,
+			String address, String phone) {
+		try {
+			Connection connection = ConnectionSQL.getConnection();
+			PreparedStatement stm = connection.prepareStatement(
+					"Insert Into client (user,pass,money,fullname,birthday,address,phone) values(?,?,?,?,?,?,?)");
+			stm.setString(1, user);
+			stm.setString(2, password);
+			stm.setString(3, money);
+			stm.setString(4, fullname);
+			stm.setString(5, birthday);
+			stm.setString(6, address);
+			stm.setString(7, phone);
+			stm.executeUpdate();
+			stm.close();
 			connection.close();
 			System.out.println("Add client into database successed!");
 		} catch (SQLException e) {
 			System.out.println("Add client into database failed!");
 			e.printStackTrace();
 		}
-    }
-    public static ArrayList<Client> getClients(String data) {
-    	try {
-    		ArrayList<Client> clientList=new ArrayList<Client>();
-    		Connection connection=ConnectionSQL.getConnection();
-			Statement stm=connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("Select * from %s",data));
+	}
+
+	public static ArrayList<Client> findAll() {
+		try {
+			ArrayList<Client> clientList = new ArrayList<Client>();
+			Connection connection = ConnectionSQL.getConnection();
+			Statement stm = connection.createStatement();
+			ResultSet rs = stm.executeQuery("Select * from client");
 			while (rs.next()) {
-				clientList.add(new Client(rs.getInt("clientID"), rs.getString("user"), rs.getString("pass"),rs.getString("money"),
-						rs.getString("fullname"),rs.getDate("birthday").toString(),rs.getString("address"),rs.getString("phone"),rs.getString("image")));
+				clientList.add(new Client(rs.getInt("clientID"), rs.getString("user"), rs.getString("pass"),
+						rs.getString("money"), rs.getString("fullname"), rs.getDate("birthday").toString(),
+						rs.getString("address"), rs.getString("phone"), rs.getString("image")));
 			}
 			System.out.println("Get client database successed!");
 			connection.close();
@@ -49,35 +52,40 @@ public class ClientDAO {
 			System.out.println("Get client database failed!");
 			e.printStackTrace();
 		}
-    	
+
 		return null;
-    }
-    public static Client getClientById(int clientID,String data) {
-    	try {
-    		Connection connection=ConnectionSQL.getConnection();
-			Statement stm=connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("Select * from %s where clientID=%d",data,clientID));
+	}
+
+	public static Client findByClientId(int clientID) {
+		try {
+			Connection connection = ConnectionSQL.getConnection();
+			Statement stm = connection.createStatement();
+			ResultSet rs = stm.executeQuery(String.format("Select * from client where clientID=%d", clientID));
 			System.out.println("Get client database successed!");
-			if(rs.next()) {
-				return new Client(rs.getInt("clientID"), rs.getString("user"), rs.getString("pass"),rs.getString("money"),
-						rs.getString("fullname"),rs.getDate("birthday").toString(),rs.getString("address"),rs.getString("phone"),rs.getString("image"));
+			if (rs.next()) {
+				return new Client(rs.getInt("clientID"), rs.getString("user"), rs.getString("pass"),
+						rs.getString("money"), rs.getString("fullname"), rs.getDate("birthday").toString(),
+						rs.getString("address"), rs.getString("phone"), rs.getString("image"));
 			}
 			connection.close();
 		} catch (SQLException e) {
 			System.out.println("Get client database failed!");
 			e.printStackTrace();
 		}
-    	
+
 		return null;
-    }
-    public static Client getAccesser(String user, String pass,String data) {
-    	try {
-    		Connection connection=ConnectionSQL.getConnection();
-			Statement stm=connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("Select * from %s where user=\"%s\"AND pass=\"%s\"",data,user,pass));
-			if(rs.next()) {
-				return new Client(rs.getInt("clientID"), rs.getString("user"), rs.getString("pass"),rs.getString("money"),
-						rs.getString("fullname"),rs.getDate("birthday").toString(),rs.getString("address"),rs.getString("phone"),rs.getString("image"));
+	}
+
+	public static Client findByUserAndPass(String user, String pass) {
+		try {
+			Connection connection = ConnectionSQL.getConnection();
+			Statement stm = connection.createStatement();
+			ResultSet rs = stm
+					.executeQuery(String.format("Select * from client where user=\"%s\"AND pass=\"%s\"", user, pass));
+			if (rs.next()) {
+				return new Client(rs.getInt("clientID"), rs.getString("user"), rs.getString("pass"),
+						rs.getString("money"), rs.getString("fullname"), rs.getDate("birthday").toString(),
+						rs.getString("address"), rs.getString("phone"), rs.getString("image"));
 			}
 			System.out.println("Get client database successed!");
 			connection.close();
@@ -86,19 +94,36 @@ public class ClientDAO {
 			e.printStackTrace();
 		}
 		return null;
-    }
-    public static void updateAccountInData(Client client, String data) {
-    	try {
-    		Connection connection= ConnectionSQL.getConnection();
-			Statement stm=connection.createStatement();
-			stm.executeUpdate(String.format("UPDATE %s SET user=\"%s\", pass=\"%s\", fullname=\"%s\", birthday=\"%s\", address=\"%s\", phone=\"%s\", image=\"%s\" WHERE clientID=%d;",
-					data,client.getUser(),client.getPassword(),client.getFullName(),client.getBirthday(),client.getAddress(),
-					client.getPhone(),client.getImage(),client.getId()));
+	}
+
+	public static void updateByClientId(String user, String pass, String fullname, String birthday, String address,
+			String phone, String image, int clientId) {
+		try {
+			Connection connection = ConnectionSQL.getConnection();
+			Statement stm = connection.createStatement();
+			stm.executeUpdate(String.format(
+					"UPDATE client SET user=\"%s\", pass=\"%s\", fullname=\"%s\", birthday=\"%s\", address=\"%s\", phone=\"%s\", image=\"%s\" WHERE clientID=%d;",
+					user, pass, fullname, birthday, address, phone, image, clientId));
 			connection.close();
 			System.out.println("Update account in database successed!");
 		} catch (SQLException e) {
 			System.out.println("Update account in database failed!");
 			e.printStackTrace();
 		}
-    }
+	}
+
+	public static void decreaseMoneyByClientId(long money, int clientID) {
+		try {
+			Connection connection = ConnectionSQL.getConnection();
+			Statement stm = connection.createStatement();
+			stm.executeUpdate(String.format("Update client set money=money-%d WHERE clientID=%d", money, clientID));
+
+			connection.close();
+			System.out.println("Delete cart in database successed!");
+		} catch (SQLException e) {
+			System.out.println("Delete cart in database failed!");
+			e.printStackTrace();
+		}
+
+	}
 }

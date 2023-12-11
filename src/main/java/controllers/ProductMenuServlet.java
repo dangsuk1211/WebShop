@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.DAOs.ProductDAO;
+import model.BOs.ProductBO;
 import model.entities.Product;
 
 @WebServlet(urlPatterns = "/Trangchu/ProductMenu")
@@ -31,9 +31,9 @@ public class ProductMenuServlet extends HttpServlet{
 	    String categoryID=req.getParameter("categoryID");
 	    if(search==null) {
 	    	if(categoryID==null) {
-	    		productList=ProductDAO.getProductFromData("product");
+	    		productList=ProductBO.getProductFromData();
 	    	}else {
-	    		productList=ProductDAO.getProductsByCategory(Integer.parseInt(categoryID),"product");
+	    		productList=ProductBO.getProductsByCategory(Integer.parseInt(categoryID));
 	    	}
 	    }else {
 	    	System.out.println(search);

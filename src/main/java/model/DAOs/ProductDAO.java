@@ -11,15 +11,16 @@ import config.ConnectionSQL;
 import model.entities.Product;
 
 public class ProductDAO {
-    public static ArrayList<Product> getProductFromData(String data){
-    	try {
-    		ArrayList<Product> productList=new ArrayList<Product>();
-    		Connection connection=ConnectionSQL.getConnection();
-			Statement stm=connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("Select * from %s",data));
+	public static ArrayList<Product> findAll() {
+		try {
+			ArrayList<Product> productList = new ArrayList<Product>();
+			Connection connection = ConnectionSQL.getConnection();
+			Statement stm = connection.createStatement();
+			ResultSet rs = stm.executeQuery("Select * from product");
 			while (rs.next()) {
 				productList.add(new Product(rs.getInt("productID"), rs.getString("product"), rs.getString("priceO"),
-						rs.getString("priceS"), rs.getString("img"),rs.getInt("shop_shopID"),rs.getInt("category_categoryID")));
+						rs.getString("priceS"), rs.getString("img"), rs.getInt("shop_shopID"),
+						rs.getInt("category_categoryID")));
 			}
 			System.out.println("Get product list database successed!");
 			connection.close();
@@ -28,18 +29,20 @@ public class ProductDAO {
 			System.out.println("Get product list database failed!");
 			e.printStackTrace();
 		}
-    	
+
 		return null;
-    }
-    public static ArrayList<Product> getProductsByShop(int shopID,String data){
-    	try {
-    		ArrayList<Product> productList=new ArrayList<Product>();
-    		Connection connection=ConnectionSQL.getConnection();
-			Statement stm=connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("Select * from %s where shop_shopID=%d",data,shopID));
+	}
+
+	public static ArrayList<Product> findByShopId(int shopID) {
+		try {
+			ArrayList<Product> productList = new ArrayList<Product>();
+			Connection connection = ConnectionSQL.getConnection();
+			Statement stm = connection.createStatement();
+			ResultSet rs = stm.executeQuery(String.format("Select * from product where shop_shopID=%d", shopID));
 			while (rs.next()) {
 				productList.add(new Product(rs.getInt("productID"), rs.getString("product"), rs.getString("priceO"),
-						rs.getString("priceS"), rs.getString("img"),rs.getInt("shop_shopID"),rs.getInt("category_categoryID")));
+						rs.getString("priceS"), rs.getString("img"), rs.getInt("shop_shopID"),
+						rs.getInt("category_categoryID")));
 			}
 			System.out.println("Get product list of shop database successed!");
 			connection.close();
@@ -48,18 +51,20 @@ public class ProductDAO {
 			System.out.println("Get product list of shop database failed!");
 			e.printStackTrace();
 		}
-    	
+
 		return null;
-    }
-    public static Product getProductByID(int productID,String data){
-    	try {
-    		Product p=null;
-    		Connection connection=ConnectionSQL.getConnection();
-			Statement stm=connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("Select * from %s where productID=%d",data,productID));
+	}
+
+	public static Product findByProductId(int productID) {
+		try {
+			Product p = null;
+			Connection connection = ConnectionSQL.getConnection();
+			Statement stm = connection.createStatement();
+			ResultSet rs = stm.executeQuery(String.format("Select * from product where productID=%d", productID));
 			if (rs.next()) {
-				p=new Product(rs.getInt("productID"), rs.getString("product"), rs.getString("priceO"),
-						rs.getString("priceS"), rs.getString("img"),rs.getInt("shop_shopID"),rs.getInt("category_categoryID"));
+				p = new Product(rs.getInt("productID"), rs.getString("product"), rs.getString("priceO"),
+						rs.getString("priceS"), rs.getString("img"), rs.getInt("shop_shopID"),
+						rs.getInt("category_categoryID"));
 			}
 			System.out.println("Get a product database successed!");
 			connection.close();
@@ -68,20 +73,23 @@ public class ProductDAO {
 			System.out.println("Get a product database failed!");
 			e.printStackTrace();
 		}
-    	
+
 		return null;
-    }
-    public static void addProductToData(Product product, String data) {
-    	try {
-    		Connection connection=ConnectionSQL.getConnection();
-			PreparedStatement stm=connection.prepareStatement("Insert Into "+ data+"(product,priceO,priceS,img,shop_shopID,category_categoryID) values(?,?,?,?,?,?)");
-			stm.setString(1, product.getProduct());
-			stm.setString(2, product.getOriginalPrice());
-			stm.setString(3, product.getSalePrice());
-			stm.setString(4, product.getUrl());
-			stm.setInt(5, product.getShopID());
-			stm.setInt(6, product.getCategoryID());
-    		stm.executeUpdate();
+	}
+
+	public static void insert(String product, String oPrice, String salePrice, String urlImage, int shopId,
+			int categoryId) {
+		try {
+			Connection connection = ConnectionSQL.getConnection();
+			PreparedStatement stm = connection.prepareStatement(
+					"Insert Into product(product,priceO,priceS,img,shop_shopID,category_categoryID) values(?,?,?,?,?,?)");
+			stm.setString(1, product);
+			stm.setString(2, oPrice);
+			stm.setString(3, salePrice);
+			stm.setString(4, urlImage);
+			stm.setInt(5, shopId);
+			stm.setInt(6, categoryId);
+			stm.executeUpdate();
 			connection.close();
 			stm.close();
 			System.out.println("Add product into database successed!");
@@ -89,41 +97,48 @@ public class ProductDAO {
 			System.out.println("Add product into database failed!");
 			e.printStackTrace();
 		}
-    }
-    public static void deleteProductInData(int productID, String data) {
-    	try {
-    		Connection connection=ConnectionSQL.getConnection();
-			Statement stm=connection.createStatement();
-			stm.executeUpdate(String.format("DELETE FROM %s WHERE productID=%d;",data,productID));
+	}
+
+	public static void deleteByProductId(int productID) {
+		try {
+			Connection connection = ConnectionSQL.getConnection();
+			Statement stm = connection.createStatement();
+			stm.executeUpdate(String.format("DELETE FROM product WHERE productID=%d;", productID));
 			connection.close();
 			System.out.println("Delete a product in database successed!");
 		} catch (SQLException e) {
 			System.out.println("Delete a product in database failed!");
 			e.printStackTrace();
 		}
-    }
-    public static void updateProductInData(Product product, String data) {
-    	try {
-    		Connection connection= ConnectionSQL.getConnection();
-			Statement stm=connection.createStatement();
-			stm.executeUpdate(String.format("UPDATE %s SET product=\"%s\", priceO=\"%s\", priceS=\"%s\", img=\"%s\", category_categoryID=%d WHERE productID=%d;",
-					data,product.getProduct(),product.getOriginalPrice(),product.getSalePrice(),product.getUrl(),product.getCategoryID(),product.getId()));
+	}
+
+	public static void UpdateByProductId(String product, String oPrice, String sPrice, String urlImage, int categoryId,
+			int productId) {
+		try {
+			Connection connection = ConnectionSQL.getConnection();
+			Statement stm = connection.createStatement();
+			stm.executeUpdate(String.format(
+					"UPDATE %s SET product=\"%s\", priceO=\"%s\", priceS=\"%s\", img=\"%s\", category_categoryID=%d WHERE productID=%d;",
+					product, oPrice, sPrice, urlImage, categoryId, productId));
 			connection.close();
 			System.out.println("Update a product in database successed!");
 		} catch (SQLException e) {
 			System.out.println("Update a product in database failed!");
 			e.printStackTrace();
 		}
-    }
-    public static ArrayList<Product> getProductsByCategory(int categoryID,String data){
-    	try {
-    		ArrayList<Product> productList=new ArrayList<Product>();
-    		Connection connection=ConnectionSQL.getConnection();
-			Statement stm=connection.createStatement();
-			ResultSet rs=stm.executeQuery(String.format("Select * from %s where category_categoryID=%d",data,categoryID));
+	}
+
+	public static ArrayList<Product> findByCategoryId(int categoryID) {
+		try {
+			ArrayList<Product> productList = new ArrayList<Product>();
+			Connection connection = ConnectionSQL.getConnection();
+			Statement stm = connection.createStatement();
+			ResultSet rs = stm
+					.executeQuery(String.format("Select * from product where category_categoryID=%d", categoryID));
 			while (rs.next()) {
 				productList.add(new Product(rs.getInt("productID"), rs.getString("product"), rs.getString("priceO"),
-						rs.getString("priceS"), rs.getString("img"),rs.getInt("shop_shopID"),rs.getInt("category_categoryID")));
+						rs.getString("priceS"), rs.getString("img"), rs.getInt("shop_shopID"),
+						rs.getInt("category_categoryID")));
 			}
 			System.out.println("Get products by category database successed!");
 			connection.close();
@@ -132,7 +147,7 @@ public class ProductDAO {
 			System.out.println("Get products by category database failed!");
 			e.printStackTrace();
 		}
-    	
+
 		return null;
-    }
+	}
 }

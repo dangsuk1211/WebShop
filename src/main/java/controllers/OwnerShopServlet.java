@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.DAOs.ProductDAO;
+import model.BOs.ProductBO;
 import model.entities.Product;
 import model.entities.Shop;
 
@@ -31,7 +31,7 @@ public class OwnerShopServlet extends HttpServlet {
 		resp.setContentType("text/html; charset=UTF-8");
 		HttpSession ses = req.getSession();
 		Shop shop = (Shop) ses.getAttribute("shop");
-		productList = ProductDAO.getProductsByShop(shop.getId(), "product");
+		productList = ProductBO.getProductsByShop(shop.getId());
 		req.setAttribute("productList", productList);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/Pages/ManegerPage/OwnerShop.jsp");
 		dispatcher.forward(req, resp);
@@ -60,11 +60,11 @@ public class OwnerShopServlet extends HttpServlet {
 			url = (String) req.getParameter("url");
 			shopID = Integer.parseInt(req.getParameter("shopID"));
 			categoryID = Integer.parseInt(req.getParameter("categoryID"));
-			ProductDAO.addProductToData(new Product(0, product, priceO, priceS, url, shopID, categoryID), "product");
+			ProductBO.addProductToData(new Product(0, product, priceO, priceS, url, shopID, categoryID));
 			break;
 		case "DELETE":
 			productID = Integer.parseInt(req.getParameter("pID"));
-			ProductDAO.deleteProductInData(productID, "product");
+			ProductBO.deleteProductInData(productID);
 			break;
 		case "PUT":
 			productID = Integer.parseInt((String) req.getParameter("id"));
@@ -79,8 +79,7 @@ public class OwnerShopServlet extends HttpServlet {
 			} catch (Exception e) {
 				categoryID = Integer.parseInt(req.getParameter("category0-ID"));
 			}
-			ProductDAO.updateProductInData(new Product(productID, product, priceO, priceS, url, shopID, categoryID),
-					"product");
+			ProductBO.updateProductInData(new Product(productID, product, priceO, priceS, url, shopID, categoryID));
 			break;
 		default:
 			break;

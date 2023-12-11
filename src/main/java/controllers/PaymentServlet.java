@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.DAOs.PaymentDAO;
+import model.BOs.PaymentBO;
 import model.entities.Client;
 import model.entities.Payment;
 @WebServlet("/Trangchu/Payment")
@@ -38,7 +38,7 @@ public class PaymentServlet extends HttpServlet{
 	    String cardholderName=(String) req.getParameter("name");
 	    HttpSession ses=req.getSession();
 	    Client client=(Client) ses.getAttribute("user");
-	    PaymentDAO.addPaymentToData(new Payment(0, cardholderName, client.getFullName(),0,client.getId() ,money), "payment");
+	    PaymentBO.addPaymentToData(new Payment(0, cardholderName, client.getFullName(),0,client.getId() ,money));
 	    resp.sendRedirect(req.getContextPath()+"/Trangchu");
 	}
 }

@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.DAOs.CommentDAO;
+import model.BOs.CommentBO;
+import model.BOs.OwnerShopBO;
+import model.BOs.ProductBO;
 import model.entities.Client;
 import model.entities.Comment;
 import model.entities.Product;
@@ -31,13 +33,10 @@ public class DetailProductServlet extends HttpServlet{
 	    resp.setCharacterEncoding("UTF-8");
 	    resp.setContentType("text/html; charset=UTF-8");
 	    int id= Integer.parseInt(req.getParameter("id"));
-		String product=(String)req.getParameter("product");
-		String priceO=(String)req.getParameter("priceO");
-		String priceS=(String)req.getParameter("priceS");
-		String url=(String)req.getParameter("url");
-		int shopID=Integer.parseInt(req.getParameter("shopID"));
-	    req.setAttribute("product", new Product(id, product, priceO, priceS, url,shopID));
-	    
+	    Product product=ProductBO.getProductByID(id);
+	    req.setAttribute("product", product);
+	    req.setAttribute("shop", OwnerShopBO.getShopByID(product.getShopID()));
+	    req.setAttribute("comments", CommentBO.getCommentsByProductID(id));
 		RequestDispatcher dispatcher=req.getRequestDispatcher("/Detail.jsp");
 		dispatcher.forward(req, resp);
 	}
@@ -51,7 +50,7 @@ public class DetailProductServlet extends HttpServlet{
 	    String comment=req.getParameter("comment");
 	    int id= Integer.parseInt(req.getParameter("id"));
 
-	    CommentDAO.addCommentToData(new Comment(comment,client.getId(),id) , "comment");
+	    CommentBO.addCommentToData(new Comment(comment,client.getId(),id));
 		resp.sendRedirect(req.getContextPath()+"/Trangchu/Product");
 	}
 }
