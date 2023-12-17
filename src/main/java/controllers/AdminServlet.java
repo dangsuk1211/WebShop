@@ -2,9 +2,6 @@ package controllers;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
-
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.BOs.PaymentBO;
-import model.entities.Product;
+
 
 @WebServlet(urlPatterns = "/Admin")
 public class AdminServlet extends HttpServlet{
@@ -23,12 +20,12 @@ public class AdminServlet extends HttpServlet{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	ArrayList<Product> productList=new ArrayList<Product>();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	    req.setCharacterEncoding("UTF-8");
 	    resp.setCharacterEncoding("UTF-8");
 	    resp.setContentType("text/html; charset=UTF-8");
+	    req.setAttribute("paymentList", PaymentBO.getPayments());
 		RequestDispatcher dispatcher=req.getRequestDispatcher("/Pages/ManegerPage/Admin.jsp");
 		dispatcher.forward(req, resp);
 	}
@@ -37,9 +34,7 @@ public class AdminServlet extends HttpServlet{
 	    req.setCharacterEncoding("UTF-8");
 	    resp.setCharacterEncoding("UTF-8");
 	    resp.setContentType("text/html; charset=UTF-8");
-//	    HttpSession ses=req.getSession();
 	    String table=req.getParameter("table");
-//	    System.out.println(table);
 	    switch (table) {
 		case "payment":
 			String status=req.getParameter("status");

@@ -1,6 +1,3 @@
-<%@page import="model.DAOs.ClientDAO"%>
-<%@page import="model.DAOs.PaymentDAO"%>
-<%@page import="model.DAOs.OwnerShopDAO"%>
 <%@page import="model.entities.Shop"%>
 <%@page import="model.entities.Client"%>
 <%@page import="model.entities.Payment"%>
@@ -85,9 +82,8 @@ body {
 								</thead>
 								<tbody>
 									<%
-									ArrayList<Payment> paymentList = PaymentDAO.getPayments("payment");
-									ArrayList<Shop> shopList = OwnerShopDAO.getShops("shop");
-									ArrayList<Client> clientList = ClientDAO.getClients("client");
+									ArrayList<Payment> paymentList =(ArrayList<Payment>) request.getAttribute("paymentList");
+
 									if (paymentList != null)
 										for (Payment pay : paymentList) {
 									%>
