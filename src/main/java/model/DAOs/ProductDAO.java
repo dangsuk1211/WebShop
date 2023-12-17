@@ -54,7 +54,27 @@ public class ProductDAO {
 
 		return null;
 	}
+	public static ArrayList<Product> findLikeProduct(String key) {
+		try {
+			ArrayList<Product> productList = new ArrayList<Product>();
+			Connection connection = ConnectionSQL.getConnection();
+			Statement stm = connection.createStatement();
+			ResultSet rs = stm.executeQuery("Select * from product where product like '%"+key+"%'");
+			while (rs.next()) {
+				productList.add(new Product(rs.getInt("productID"), rs.getString("product"), rs.getString("priceO"),
+						rs.getString("priceS"), rs.getString("img"), rs.getInt("shop_shopID"),
+						rs.getInt("category_categoryID")));
+			}
+			System.out.println("Get product list of shop database successed!");
+			connection.close();
+			return productList;
+		} catch (SQLException e) {
+			System.out.println("Get product list of shop database failed!");
+			e.printStackTrace();
+		}
 
+		return null;
+	}
 	public static Product findByProductId(int productID) {
 		try {
 			Product p = null;

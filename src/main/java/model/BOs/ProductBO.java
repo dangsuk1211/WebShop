@@ -40,4 +40,8 @@ public class ProductBO {
 
 		return ProductDAO.findByCategoryId(categoryID);
 	}
+	public static ArrayList<Product> searchProducts(String key) {
+
+		return ProductDAO.findLikeProduct(key);
+	}
 }

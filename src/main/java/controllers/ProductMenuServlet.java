@@ -36,7 +36,7 @@ public class ProductMenuServlet extends HttpServlet{
 	    		productList=ProductBO.getProductsByCategory(Integer.parseInt(categoryID));
 	    	}
 	    }else {
-	    	System.out.println(search);
+	    	productList = ProductBO.searchProducts(search);
 	    }
 	    req.setAttribute("productList", productList);
 		RequestDispatcher dispatcher=req.getRequestDispatcher("/ProductMenu.jsp");

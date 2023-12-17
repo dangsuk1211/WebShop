@@ -63,8 +63,8 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 	<%@ include file="/Pages/MasterPage/Header.jsp"%>
 	<div id="main-home">
 		<div class="sw" style="width: auto;">
-			<form>
-				<input type="search" class="search" placeholder="Search..." />
+			<form method="get" action="<%= request.getContextPath()+"/Trangchu/ProductMenu"%>">
+				<input type="search" name="search" class="search" placeholder="Search..." />
 				<button class="go">
 					<svg enable-background="new 0 0 512 512" version="1.1"
 						viewBox="0 0 512 512" xml:space="preserve"
