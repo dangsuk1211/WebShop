@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.BOs.CategoryBO;
 import model.BOs.ProductBO;
 import model.entities.Product;
 import model.entities.Shop;
@@ -33,6 +34,7 @@ public class OwnerShopServlet extends HttpServlet {
 		Shop shop = (Shop) ses.getAttribute("shop");
 		productList = ProductBO.getProductsByShop(shop.getId());
 		req.setAttribute("productList", productList);
+		req.setAttribute("categoryList", CategoryBO.getCategorysInData());
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/Pages/ManegerPage/OwnerShop.jsp");
 		dispatcher.forward(req, resp);
 	}

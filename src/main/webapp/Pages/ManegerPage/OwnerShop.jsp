@@ -1,6 +1,5 @@
+<%@page import="model.BOs.CategoryBO"%>
 <%@page import="model.entities.Category"%>
-<%@page import="model.DAOs.CategoryDAO"%>
-<%@page import="model.DAOs.ProductDAO"%>
 <%@page import="model.entities.Shop"%>
 <%@page import="model.entities.Product"%>
 <%@page import="java.util.ArrayList"%>
@@ -290,10 +289,8 @@ input:focus+label, input:valid+label, textarea:focus+label, textarea:valid+label
 								<tbody>
 									<%
 									Shop shop = (Shop) request.getSession().getAttribute("shop");
-									ArrayList<Product> productList = new ArrayList<Product>();
-									productList = (ArrayList<Product>) request.getAttribute("productList");
-									ArrayList<Category> categoryList = new ArrayList<Category>();
-									categoryList = CategoryDAO.getCategorysInData("category");
+									ArrayList<Product> productList = (ArrayList<Product>) request.getAttribute("productList");
+									ArrayList<Category> categoryList = (ArrayList<Category>) request.getAttribute("categoryList");
 									if (productList != null)
 										for (Product product : productList) {
 									%>
@@ -304,7 +301,7 @@ input:focus+label, input:valid+label, textarea:focus+label, textarea:valid+label
 										<td><%=Product.formMoney(product.getSalePrice())%></td>
 										<td style="max-width: 200px"><%=product.getUrl()%></td>
 										<td><img src="<%=product.getUrl()%>"></td>
-										<td id="<%=product.getCategoryID()%>"><%=CategoryDAO.getCategory(product.getCategoryID(), "category")%></td>
+										<td id="<%=product.getCategoryID()%>"><%=CategoryBO.getCategory(product.getCategoryID())%></td>
 										<td style="min-width: 80px">
 											<button class="btn-update"
 												style="background-color: #007bff; border-radius: 8%; color: antiquewhite;">
